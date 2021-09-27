@@ -1,0 +1,3 @@
+[submodule "Systeme/nachos"]
+	path = Systeme/nachos
+	url = git@github.com:Xris65/nachos.git
