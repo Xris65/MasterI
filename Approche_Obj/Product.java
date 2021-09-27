@@ -18,10 +18,13 @@ public class Product {
         return name;
     }
     public void modifyQuantity(int num){
-        quantity += num;
+        if(quantity + num < 0)
+            quantity = 0;
+        else
+            quantity += num;
     }
     @Override
     public String toString() {
-        return "[ id: "+ id +", " + name + ", quantity: " + quantity;
+        return "[ id: "+ id +", " + name + ", quantity: " + quantity + " ]";
     }
 }

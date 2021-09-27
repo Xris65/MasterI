@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
-public class Stock {
-    private ArrayList<Product> products;
+public class Stock  extends ArrayList<Product>{
     private String name;
     private String addr;
 
@@ -9,12 +8,17 @@ public class Stock {
         this.name = name;
     }
     public ArrayList<Product> getProducts(){
-        return products;
+        return this;
     }
     public void addProduct(Product p){
-        products.add(new Product(p.getName(),p.getQuantity()));
+        add(new Product(p.getName(),p.getQuantity()));
     }
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "[ name: " + name + ", nombre d'articles : " + size() + "]\n";
     }
 }
