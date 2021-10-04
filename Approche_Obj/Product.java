@@ -1,4 +1,4 @@
-public class Product {
+public abstract class  Product {
     private String name;
     private int quantity;
     private static int count = 0;
@@ -23,8 +23,21 @@ public class Product {
         else
             quantity += num;
     }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean canSell() {
+        return true;
+    }
+
     @Override
     public String toString() {
-        return "[ id: "+ id +", " + name + ", quantity: " + quantity + " ]";
+        return "[ id: "+ id +", " + name + ", quantity: " + quantity;
+    }
+    public String toSave(){
+        return "[ " + id + ", " + name + ", " + quantity;
     }
 }
