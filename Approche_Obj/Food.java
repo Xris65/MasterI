@@ -1,5 +1,6 @@
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Food extends Product {
     private LocalDate expiryDate;
@@ -16,7 +17,7 @@ public class Food extends Product {
 
     @Override
     public String toSave() {
-        return super.toSave() + ", " + expiryDate + "]";
+        return super.toSave() + "," + expiryDate.format(DateTimeFormatter.ofPattern("d/MM/yyyy")) + "]";
     }
 
     public boolean canSell(){

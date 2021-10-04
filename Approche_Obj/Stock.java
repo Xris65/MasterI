@@ -26,12 +26,12 @@ public class Stock  extends ArrayList<Product>{
         }
         if(dateLC != null) {
             add(new Food(name, quantity, dateLC));
-            System.out.println("Fait!\n");
+            System.out.println("Produit alimentaire '" + name + "' ajouté!\n");
         }
     }
     public void addSanitary(String name, int quantity){
         add(new Sanitary(name,quantity));
-        System.out.println("Fait!\n");
+        System.out.println("Produit sanitaire '" + name +"' ajouté!\n");
     }
     public String getName() {
         return name;

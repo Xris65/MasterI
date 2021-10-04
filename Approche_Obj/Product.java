@@ -38,6 +38,6 @@ public abstract class  Product {
         return "[ id: "+ id +", " + name + ", quantity: " + quantity;
     }
     public String toSave(){
-        return "[ " + id + ", " + name + ", " + quantity;
+        return "[" + name + "," + quantity;
     }
 }

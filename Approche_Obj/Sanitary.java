@@ -11,4 +11,9 @@ public class Sanitary extends Product{
     public String toString() {
         return super.toString() + " ]";
     }
+
+    @Override
+    public String toSave() {
+        return super.toSave() + "]";
+    }
 }
