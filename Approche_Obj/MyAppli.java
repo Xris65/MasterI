@@ -51,11 +51,11 @@ public class MyAppli {
             String name, date, productInfo = null;
             if (scanner.hasNext()) {
                 String stockName = scanner.next();
-                if (!checkIfStockExists(stocks, stockName)) {
+                if (!checkIfStockExists(stocks, stockName) && !stockName.contains(" ")) {
                     stock = new Stock(stockName);
                     stocks.add(stock);
                 } else {
-                    System.out.println("Le stock existe deja!\n");
+                    System.out.println("Le stock existe deja ou le fichier contient un stock pas conforme!\n");
                     return;
                 }
 
