@@ -1,3 +1,7 @@
+import Soldats.Cavalier;
+import Soldats.Fantassin;
+import Soldats.Soldat;
+
 public class Main {
 
     public static void main(String[] args) {

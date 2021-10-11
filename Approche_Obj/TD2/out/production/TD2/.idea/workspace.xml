@@ -5,33 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ce6e87b-0525-4889-96b7-407390f929be" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Armes/Bouclier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Armes/Sabre.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Soldats/SoldatDecorator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TD2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../ACID/td02.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../../ACID/td02.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cavalier.java" beforeDir="false" afterPath="$PROJECT_DIR$/Soldats/Cavalier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fantassin.java" beforeDir="false" afterPath="$PROJECT_DIR$/Soldats/Fantassin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Soldat.java" beforeDir="false" afterPath="$PROJECT_DIR$/Soldats/Soldat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SoldatAbstrait.java" beforeDir="false" afterPath="$PROJECT_DIR$/Soldats/SoldatAbstrait.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Systeme/nachos" beforeDir="false" afterPath="$PROJECT_DIR$/../../Systeme/nachos" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -45,17 +27,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="advanced.settings" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">

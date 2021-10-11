@@ -1,3 +1,5 @@
+package Soldats;
+
 public class Fantassin extends SoldatAbstrait {
     private static final int FORCE_FANTASSIN = 1;
 
@@ -8,4 +10,5 @@ public class Fantassin extends SoldatAbstrait {
     public int force() {
         return FORCE_FANTASSIN;
     }
+
 }
