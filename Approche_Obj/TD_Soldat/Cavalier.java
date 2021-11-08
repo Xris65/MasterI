@@ -8,4 +8,8 @@ public class Cavalier extends SoldatAbstrait {
     public int force() {
         return FORCE_CAVALIER;
     }
+
+    public void accept(SoldatVisitor visitor){
+        visitor.visit(this);
+    }
 }

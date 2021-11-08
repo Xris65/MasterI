@@ -8,4 +8,8 @@ public class Fantassin extends SoldatAbstrait {
     public int force() {
         return FORCE_FANTASSIN;
     }
+
+    public void accept(SoldatVisitor visitor){
+        visitor.visit(this);
+    }
 }

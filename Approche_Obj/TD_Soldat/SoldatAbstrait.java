@@ -1,4 +1,4 @@
-abstract class SoldatAbstrait implements SoldatInterface {
+abstract class SoldatAbstrait implements Soldat {
     protected int vie;
 
     SoldatAbstrait(int vie) {

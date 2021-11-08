@@ -1,0 +1,5 @@
+1 - facteur de branchement = #maximal de fils d'un noeud de l nombre de jeux
+
+2- meilleur plateau pour ami est 8, pour enemi est -4
+
+3- il faut que ? soit <=3
