@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import json
 import urllib.request
-url = 'https://www.labri.fr/perso/zemmari/acid/tds/td5/td05-sujet.html'
+url = 'https://www.labri.fr/perso/zemmari/acid/tds/td6/td06-sujet.html'
 response = urllib.request.urlopen(url)
 #  for local html file
 # response = open("/Users/note/jupyter/notebook.html")

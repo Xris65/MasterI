@@ -58,7 +58,7 @@ t = time.perf_counter()
 def elapsedTime():
     return time.perf_counter() - t
 
-statsExploration(board)
+#statsExploration(board)
 
 #Ex 2.2
 def ShannonHeuristic(b: chess.Board):
@@ -90,7 +90,7 @@ def MinMax(b,depth=3):
 def MaxMin(b,depth=3):
     meilleur = -1000
     for m in b.generate_legal_moves():
-        val = MaxMin(b,depth-1)
+        val = MinMax(b,depth-1)
         if(val > meilleur):
             meilleur = val
     return val
@@ -107,6 +107,7 @@ def CoupMaxMin(b,depth=3):
         b.pop()
     return coup
 
+print(CoupMaxMin(board))
 
 def AlphaBeta(b,depth=3,alpha=-1000,beta=1000):
     if(depth == 0 or b.is_game_over()):
