@@ -1,11 +1,12 @@
 public class SoldatEpee extends SoldatDecorator{
     private int FORCE_EPEE = 3;
-    private int DEFENSE = 3;
+    private int RESISTANCE = 3;
     private int USURE = 6; // Si la USURE == 0 , l'arme est inutile. Il ne peut donc pas defendre, ni attaquer(donner de la force).
 
 
-    SoldatEpee(Soldat soldat, int solidite) {
-        super(soldat, solidite);
+
+    SoldatEpee(Soldat soldat, int resistance) {
+        super(soldat,resistance);
     }
 
     @Override
@@ -24,10 +25,10 @@ public class SoldatEpee extends SoldatDecorator{
     }
 
 
-    public int defense(){
+    public int resistance(){
         if (USURE > 0) {
             USURE--;
-            return DEFENSE;
+            return RESISTANCE;
         }
         return 0;
     }

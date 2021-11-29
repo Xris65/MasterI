@@ -14,18 +14,20 @@ public class SoldatProxy implements Soldat {
             throw new Error("Type de soldat inconnu");
         }
     }
-
-    public void ajouterEpee(int solidite) {
+    public SoldatProxy(Soldat soldat){
+        this.soldat = soldat;
+    }
+    public void ajouterEpee(int resistance) {
         int nbArmes = nbBoucliers + nbEpees;
         if (nbArmes < 2 && nbEpees < 1) {
-            soldat = new SoldatEpee(soldat, solidite);
+            soldat = new SoldatEpee(soldat,resistance);
             nbEpees++;
         }
     }
-    public void ajouterBouclier(int solidite) {
+    public void ajouterBouclier(int resistance) {
         int nbArmes = nbBoucliers + nbEpees;
         if (nbArmes < 2 && nbBoucliers <1) {
-            soldat = new SoldatBouclier(soldat, solidite);
+            soldat = new SoldatBouclier(soldat, resistance);
             nbBoucliers++;
         }
     }

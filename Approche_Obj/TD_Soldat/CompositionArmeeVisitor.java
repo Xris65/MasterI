@@ -16,6 +16,13 @@ public class CompositionArmeeVisitor implements SoldatVisitor{
         for(Soldat soldat : armee.getSoldats()) {
             soldat.accept(this);
         }
-        System.out.println("L'armee est composée par " + nbFantassins + " fantassins et " + nbCavaliers + " cavaliers.");
+        String compositionArmee = "L'armee "+ armee.getNom() + " est composée par ";
+        compositionArmee += (nbCavaliers > 0 && nbFantassins > 0) ? (nbCavaliers + " Cavaliers et " + nbFantassins + " fantassins") : (nbFantassins > 0) ? (nbFantassins + " fantassins"):(nbCavaliers + " cavaliers");
+        System.out.println(compositionArmee);
+        reset();
+    }
+    public void reset(){
+        nbFantassins = 0;
+        nbCavaliers = 0;
     }
 }

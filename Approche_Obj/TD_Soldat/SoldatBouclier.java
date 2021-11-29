@@ -1,16 +1,15 @@
 public class SoldatBouclier extends SoldatDecorator{
-    private int DEFENSE = 6;
+    private int RESISTANCE = 6;
     private int USURE = 6; // Si la USURE == 0, le bouclier est inutil. Il ne pourra donc plus defendre.
 
-    SoldatBouclier(Soldat soldat, int solidite) {
-        super(soldat, solidite);
+    SoldatBouclier(Soldat soldat, int resistance) {
+        super(soldat,resistance);
     }
 
-
-    public int defense(){
+    public int resistance(){
         if (USURE > 0) {
             USURE--;
-            return DEFENSE;
+            return RESISTANCE;
         }
         return 0;
     }

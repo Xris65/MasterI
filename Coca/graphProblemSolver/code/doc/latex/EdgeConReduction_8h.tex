@@ -1,0 +1,160 @@
+\hypertarget{EdgeConReduction_8h}{}\section{include/\+Edge\+Con\+Problem/\+Edge\+Con\+Reduction.h File Reference}
+\label{EdgeConReduction_8h}\index{include/\+Edge\+Con\+Problem/\+Edge\+Con\+Reduction.\+h@{include/\+Edge\+Con\+Problem/\+Edge\+Con\+Reduction.\+h}}
+
+
+An implementation of the Coca project for 2021 year. Converts a 2-\/coloured graph g and an integer k to a formula true if and only if it exists a translator set of minimal size which forces two nodes to communicate with cost strictly bigger than k. Provides functions to generate the formula and the necessary variables, alongside function to decode a solution from a model of the formula.  
+
+
+{\ttfamily \#include \char`\"{}Graph.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Edge\+Con\+Graph.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$z3.\+h$>$}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Z3\+\_\+ast \hyperlink{EdgeConReduction_8h_aaafab1fcefb294243348e1b2598662c0}{get\+Variable\+Is\+Ith\+Translator} (Z3\+\_\+context ctx, int node1, int node2, int number)
+\begin{DoxyCompactList}\small\item\em Creates a variable representing that the edge ({\ttfamily node1}, {\ttfamily node2}) has translator number {\ttfamily number}. The variable name will always start with the smaller node. \end{DoxyCompactList}\item 
+Z3\+\_\+ast \hyperlink{EdgeConReduction_8h_a5bdd911e2e9ac7eb2eb938c90e5fd490}{get\+Variable\+Parent} (Z3\+\_\+context ctx, int child, int parent)
+\begin{DoxyCompactList}\small\item\em Get the Variable p\+\_\+\{{\ttfamily child},{\ttfamily parent\}} representing that the connected component {\ttfamily parent} is the parent of the connected component {\ttfamily child} in the reduction. \end{DoxyCompactList}\item 
+Z3\+\_\+ast \hyperlink{EdgeConReduction_8h_ae70c7114d2ac8f6f7a9ee0551c69cc2d}{get\+Variable\+Level\+In\+Spanning\+Tree} (Z3\+\_\+context ctx, int level, int component)
+\begin{DoxyCompactList}\small\item\em Get the Variable l\+\_\+\{{\ttfamily component},{\ttfamily level\}} representing that the connected component {\ttfamily component} is at level {\ttfamily level} in the spanning tree. \end{DoxyCompactList}\item 
+Z3\+\_\+ast \hyperlink{EdgeConReduction_8h_a81ce2e67ac2416aabaaf8e07edea9414}{Edge\+Con\+Reduction} (Z3\+\_\+context ctx, const \hyperlink{EdgeConGraph_8h_a34de6db48ee660363ac9e8b2b0454612}{Edge\+Con\+Graph} graph, int cost)
+\begin{DoxyCompactList}\small\item\em Generates a S\+AT formula satisfiable if and only if there is a set of translators of cost {\ttfamily cost} such that the graph admits a valid path between any two nodes. \end{DoxyCompactList}\item 
+void \hyperlink{EdgeConReduction_8h_aa3e613efb8fabffc41b5bd19fd23bfe7}{get\+Translator\+Set\+From\+Model} (Z3\+\_\+context ctx, Z3\+\_\+model model, \hyperlink{EdgeConGraph_8h_a34de6db48ee660363ac9e8b2b0454612}{Edge\+Con\+Graph} graph)
+\begin{DoxyCompactList}\small\item\em Gets the translator set from a model and adds it to the Edge\+Con\+Graph. It also computes the homogeneous components taking into account the translators (this number should be one). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An implementation of the Coca project for 2021 year. Converts a 2-\/coloured graph g and an integer k to a formula true if and only if it exists a translator set of minimal size which forces two nodes to communicate with cost strictly bigger than k. Provides functions to generate the formula and the necessary variables, alongside function to decode a solution from a model of the formula. 
+
+\begin{DoxyAuthor}{Author}
+Vincent Penelle (\href{mailto:vincent.penelle@u-bordeaux.fr}{\tt vincent.\+penelle@u-\/bordeaux.\+fr}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2021-\/10-\/18
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Creative Commons 
+\end{DoxyCopyright}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{EdgeConReduction_8h_a81ce2e67ac2416aabaaf8e07edea9414}\label{EdgeConReduction_8h_a81ce2e67ac2416aabaaf8e07edea9414}} 
+\index{Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}!Edge\+Con\+Reduction@{Edge\+Con\+Reduction}}
+\index{Edge\+Con\+Reduction@{Edge\+Con\+Reduction}!Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}}
+\subsubsection{\texorpdfstring{Edge\+Con\+Reduction()}{EdgeConReduction()}}
+{\footnotesize\ttfamily Z3\+\_\+ast Edge\+Con\+Reduction (\begin{DoxyParamCaption}\item[{Z3\+\_\+context}]{ctx,  }\item[{const \hyperlink{EdgeConGraph_8h_a34de6db48ee660363ac9e8b2b0454612}{Edge\+Con\+Graph}}]{graph,  }\item[{int}]{cost }\end{DoxyParamCaption})}
+
+
+
+Generates a S\+AT formula satisfiable if and only if there is a set of translators of cost {\ttfamily cost} such that the graph admits a valid path between any two nodes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The solver context. \\
+\hline
+{\em graph} & A Edge\+Con\+Graph. \\
+\hline
+{\em cost} & The cost of the translator set. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Z3\+\_\+ast The formula. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+graph must be an initialized Edge\+Con\+Graph with computed connected components. 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{EdgeConReduction_8h_aa3e613efb8fabffc41b5bd19fd23bfe7}\label{EdgeConReduction_8h_aa3e613efb8fabffc41b5bd19fd23bfe7}} 
+\index{Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}!get\+Translator\+Set\+From\+Model@{get\+Translator\+Set\+From\+Model}}
+\index{get\+Translator\+Set\+From\+Model@{get\+Translator\+Set\+From\+Model}!Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}}
+\subsubsection{\texorpdfstring{get\+Translator\+Set\+From\+Model()}{getTranslatorSetFromModel()}}
+{\footnotesize\ttfamily void get\+Translator\+Set\+From\+Model (\begin{DoxyParamCaption}\item[{Z3\+\_\+context}]{ctx,  }\item[{Z3\+\_\+model}]{model,  }\item[{\hyperlink{EdgeConGraph_8h_a34de6db48ee660363ac9e8b2b0454612}{Edge\+Con\+Graph}}]{graph }\end{DoxyParamCaption})}
+
+
+
+Gets the translator set from a model and adds it to the Edge\+Con\+Graph. It also computes the homogeneous components taking into account the translators (this number should be one). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The solver context. \\
+\hline
+{\em model} & A variable assignment. \\
+\hline
+{\em graph} & A Edge\+Con\+Graph.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+{\ttfamily model} must be a valid model. 
+
+{\ttfamily graph} must be a valid Edge\+Con\+Graph with no translators (or at least the original number of homogeneous components). 
+\end{DoxyPrecond}
+\mbox{\Hypertarget{EdgeConReduction_8h_aaafab1fcefb294243348e1b2598662c0}\label{EdgeConReduction_8h_aaafab1fcefb294243348e1b2598662c0}} 
+\index{Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}!get\+Variable\+Is\+Ith\+Translator@{get\+Variable\+Is\+Ith\+Translator}}
+\index{get\+Variable\+Is\+Ith\+Translator@{get\+Variable\+Is\+Ith\+Translator}!Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}}
+\subsubsection{\texorpdfstring{get\+Variable\+Is\+Ith\+Translator()}{getVariableIsIthTranslator()}}
+{\footnotesize\ttfamily Z3\+\_\+ast get\+Variable\+Is\+Ith\+Translator (\begin{DoxyParamCaption}\item[{Z3\+\_\+context}]{ctx,  }\item[{int}]{node1,  }\item[{int}]{node2,  }\item[{int}]{number }\end{DoxyParamCaption})}
+
+
+
+Creates a variable representing that the edge ({\ttfamily node1}, {\ttfamily node2}) has translator number {\ttfamily number}. The variable name will always start with the smaller node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The solver context \\
+\hline
+{\em node1} & A node \\
+\hline
+{\em node2} & A node \\
+\hline
+{\em number} & A number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Z3\+\_\+ast The lowest variable in lexicographic order among \mbox{[}({\ttfamily node1}, {\ttfamily node2}),number\mbox{]} and \mbox{[}({\ttfamily node2}, {\ttfamily node1}),number\mbox{]} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{EdgeConReduction_8h_ae70c7114d2ac8f6f7a9ee0551c69cc2d}\label{EdgeConReduction_8h_ae70c7114d2ac8f6f7a9ee0551c69cc2d}} 
+\index{Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}!get\+Variable\+Level\+In\+Spanning\+Tree@{get\+Variable\+Level\+In\+Spanning\+Tree}}
+\index{get\+Variable\+Level\+In\+Spanning\+Tree@{get\+Variable\+Level\+In\+Spanning\+Tree}!Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}}
+\subsubsection{\texorpdfstring{get\+Variable\+Level\+In\+Spanning\+Tree()}{getVariableLevelInSpanningTree()}}
+{\footnotesize\ttfamily Z3\+\_\+ast get\+Variable\+Level\+In\+Spanning\+Tree (\begin{DoxyParamCaption}\item[{Z3\+\_\+context}]{ctx,  }\item[{int}]{level,  }\item[{int}]{component }\end{DoxyParamCaption})}
+
+
+
+Get the Variable l\+\_\+\{{\ttfamily component},{\ttfamily level\}} representing that the connected component {\ttfamily component} is at level {\ttfamily level} in the spanning tree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The solver context. \\
+\hline
+{\em level} & The level. \\
+\hline
+{\em component} & The number of the component. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Z3\+\_\+ast A formula representing l\+\_\+\{{\ttfamily component},{\ttfamily level\}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{EdgeConReduction_8h_a5bdd911e2e9ac7eb2eb938c90e5fd490}\label{EdgeConReduction_8h_a5bdd911e2e9ac7eb2eb938c90e5fd490}} 
+\index{Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}!get\+Variable\+Parent@{get\+Variable\+Parent}}
+\index{get\+Variable\+Parent@{get\+Variable\+Parent}!Edge\+Con\+Reduction.\+h@{Edge\+Con\+Reduction.\+h}}
+\subsubsection{\texorpdfstring{get\+Variable\+Parent()}{getVariableParent()}}
+{\footnotesize\ttfamily Z3\+\_\+ast get\+Variable\+Parent (\begin{DoxyParamCaption}\item[{Z3\+\_\+context}]{ctx,  }\item[{int}]{child,  }\item[{int}]{parent }\end{DoxyParamCaption})}
+
+
+
+Get the Variable p\+\_\+\{{\ttfamily child},{\ttfamily parent\}} representing that the connected component {\ttfamily parent} is the parent of the connected component {\ttfamily child} in the reduction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ctx} & The solver context. \\
+\hline
+{\em child} & The number of a connected component. \\
+\hline
+{\em parent} & The number of a connected component. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Z3\+\_\+ast A formula representing p\+\_\+\{{\ttfamily child},{\ttfamily parent\}}. 
+\end{DoxyReturn}

@@ -1,0 +1,56 @@
+\hypertarget{EdgeConResolution_8h}{}\section{include/\+Edge\+Con\+Problem/\+Edge\+Con\+Resolution.h File Reference}
+\label{EdgeConResolution_8h}\index{include/\+Edge\+Con\+Problem/\+Edge\+Con\+Resolution.\+h@{include/\+Edge\+Con\+Problem/\+Edge\+Con\+Resolution.\+h}}
+
+
+Algorithms to solve directly the Edge\+Con problem.  
+
+
+{\ttfamily \#include \char`\"{}Edge\+Con\+Graph.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{EdgeConResolution_8h_ad759da7baebc02d3b95e16f9d55d8169}{Brute\+Force\+Edge\+Con} (\hyperlink{EdgeConGraph_8h_a34de6db48ee660363ac9e8b2b0454612}{Edge\+Con\+Graph} graph)
+\begin{DoxyCompactList}\small\item\em Brute Force Algorithm. If there is a result, the solution will be stored in. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Algorithms to solve directly the Edge\+Con problem. 
+
+\begin{DoxyAuthor}{Author}
+Vincent Penelle (\href{mailto:vincent.penelle@u-bordeaux.fr}{\tt vincent.\+penelle@u-\/bordeaux.\+fr}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2021-\/10-\/18
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Creative Commons. 
+\end{DoxyCopyright}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{EdgeConResolution_8h_ad759da7baebc02d3b95e16f9d55d8169}\label{EdgeConResolution_8h_ad759da7baebc02d3b95e16f9d55d8169}} 
+\index{Edge\+Con\+Resolution.\+h@{Edge\+Con\+Resolution.\+h}!Brute\+Force\+Edge\+Con@{Brute\+Force\+Edge\+Con}}
+\index{Brute\+Force\+Edge\+Con@{Brute\+Force\+Edge\+Con}!Edge\+Con\+Resolution.\+h@{Edge\+Con\+Resolution.\+h}}
+\subsubsection{\texorpdfstring{Brute\+Force\+Edge\+Con()}{BruteForceEdgeCon()}}
+{\footnotesize\ttfamily int Brute\+Force\+Edge\+Con (\begin{DoxyParamCaption}\item[{\hyperlink{EdgeConGraph_8h_a34de6db48ee660363ac9e8b2b0454612}{Edge\+Con\+Graph}}]{graph }\end{DoxyParamCaption})}
+
+
+
+Brute Force Algorithm. If there is a result, the solution will be stored in. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em graph,and} & its homogeneous components updated. If no solution, graph won\textquotesingle{}t be modified. Returns the maximal cost of communication for any choice of translators.\\
+\hline
+{\em graph} & An instance of the problem. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the maximal cost that two nodes communicate with for any possible set of transducers of minimal size. Returns -\/1 if there is no solution (i.\+e., the graph is not connex).
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+graph must be valid. 
+\end{DoxyPrecond}

@@ -1,15 +1,20 @@
 import java.util.ArrayList;
 
 public class Armee implements Soldat {
+    private String nom = "Armee";
+    private ArrayList<SoldatProxy> soldats = new ArrayList<>();
 
-    private ArrayList<Soldat> soldats = new ArrayList<Soldat>();
-
-    public ArrayList<Soldat> getSoldats() {
+    public ArrayList<SoldatProxy> getSoldats() {
         return soldats;
     }
 
-    public Armee(ArrayList<Soldat> soldats) {
+    public String getNom() {
+        return nom;
+    }
+
+    public Armee(ArrayList<SoldatProxy> soldats, String nom) {
         this.soldats = soldats;
+        this.nom = nom;
     }
 
     @Override
@@ -21,8 +26,12 @@ public class Armee implements Soldat {
         return forceTotale;
     }
 
-    public void ajouterSoldat(Soldat soldat){
+    public void ajouterSoldatOuArmee(SoldatProxy soldat){
         soldats.add(soldat);
+    }
+
+    public void ajouterSoldatOuArmee(Armee armee){
+        soldats.add(new SoldatProxy(armee));
     }
 
     @Override
@@ -40,10 +49,10 @@ public class Armee implements Soldat {
     }
 
     public void ajouterEpee(int solidite){
-        soldats.forEach(soldat -> ((SoldatProxy)soldat).ajouterEpee(solidite));
+        soldats.forEach(soldat -> soldat.ajouterEpee(solidite));
     }
     public void ajouterBouclier(int solidite){
-        soldats.forEach(soldat -> ((SoldatProxy)soldat).ajouterBouclier(solidite));
+        soldats.forEach(soldat -> soldat.ajouterBouclier(solidite));
     }
 
 }
