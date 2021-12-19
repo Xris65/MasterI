@@ -1,7 +1,14 @@
 from bs4 import BeautifulSoup
 import json
 import urllib.request
-url = 'https://www.labri.fr/perso/zemmari/acid/tds/td6/td06-sujet.html'
+import sys
+
+if(len(sys.argv) != 2):
+    print("Usage: python3 converter.py <tp_number>")
+    sys.exit(1)
+
+tp_number = sys.argv[1]
+url = f'https://www.labri.fr/perso/zemmari/acid/tds/td{tp_number}/td0{tp_number}-sujet.html'
 response = urllib.request.urlopen(url)
 #  for local html file
 # response = open("/Users/note/jupyter/notebook.html")
@@ -32,5 +39,5 @@ for d in soup.findAll("div"):
                     cell['source'] = [d.decode_contents()]
                     cell['cell_type'] = 'markdown'
                     dictionary['cells'].append(cell)
-open('notebook.ipynb', 'w').write(json.dumps(dictionary))
+open(f'td0{tp_number}.ipynb', 'w').write(json.dumps(dictionary))
 

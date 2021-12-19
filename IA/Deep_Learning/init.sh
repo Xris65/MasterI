@@ -1,0 +1,1 @@
+source /net/ens/DeepLearning/python3/tensorflow2/bin/activate
