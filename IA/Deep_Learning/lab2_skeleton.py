@@ -31,8 +31,8 @@ from keras.layers import Dense, Flatten
 
 model = Sequential()
 model.add(Flatten(input_shape=(28,28)))
-model.add(Dense(10,input_dim=num_pixels, activation='softmax', kernel_initializer='normal',))
-model.add(Dense(2, activation='softmax', kernel_initializer='normal'))
+model.add(Dense(num_pixels,input_dim=num_pixels, activation='softmax', kernel_initializer='normal',))
+model.add(Dense(y_train.shape[0], activation='softmax', kernel_initializer='normal'))
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
 
 model.summary()

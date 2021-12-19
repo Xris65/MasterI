@@ -1,6 +1,4 @@
 import matplotlib.pyplot as plt
-import tensorflow
-import tensorflow.keras
 #%matplotlib inline
 import numpy as np
 
@@ -75,7 +73,6 @@ def generate_a_triangle(noise=0.0, free_location=False):
 
 
 im = generate_a_rectangle(10, True)
-print("mdr")
 plt.imshow(im.reshape(IMAGE_SIZE,IMAGE_SIZE), cmap='gray')
 
 im = generate_a_disk(10)
@@ -108,7 +105,7 @@ def generate_dataset_classification(nb_samples, noise=0.0, free_location=False):
 def generate_test_set_classification():
     np.random.seed(42)
     [X_test, Y_test] = generate_dataset_classification(300, 20, True)
-    Y_test = np_utils.to_categorical(Y_test, 3)
+    Y_test = np.utils.to_categorical(Y_test, 3)
     return [X_test, Y_test]
 
 def generate_dataset_regression(nb_samples, noise=0.0):
@@ -143,3 +140,33 @@ def generate_test_set_regression():
     np.random.seed(42)
     [X_test, Y_test] = generate_dataset_regression(300, 20)
     return [X_test, Y_test]
+
+import keras
+from keras import utils as np_utils
+from keras.models import Sequential
+from keras.layers import Dense, Flatten
+
+[X_train, y_train] = generate_dataset_classification(300, 20)
+
+X_train = X_train.astype('float32')
+y_train = y_train.astype('float32')
+print(X_train.shape)
+print(y_train.shape)
+X_train = X_train.reshape(X_train.shape[1], X_train.shape[0]).T
+y_train = keras.utils.np_utils.to_categorical(y_train)
+print(X_train.shape)
+print(y_train.shape)
+
+
+epochs = 20
+batch_size = 1
+model = Sequential()
+model.add(Flatten(input_shape=(IMAGE_SIZE * IMAGE_SIZE,)))
+model.add(Dense(IMAGE_SIZE * IMAGE_SIZE,input_dim=X_train.shape[1], activation='softmax', kernel_initializer='normal',))
+model.add(Dense(y_train.shape[1], activation='sigmoid', kernel_initializer='normal'))
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+#model.summary()
+model_list = model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, verbose=0)
+print(model_list.history.keys())
+plt.plot(range(epochs+1), model_list.history['val_accuracy'])
+plt.plot(range(epochs+1), model_list.history['accuracy'])
