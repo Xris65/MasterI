@@ -1,22 +1,30 @@
+import keras
+import matplotlib.patches as patches
+from keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, Flatten
+from keras.models import Sequential
+from keras import utils as np_utils
 import matplotlib.pyplot as plt
-#%matplotlib inline
+# %matplotlib inline
 import numpy as np
 
 # On some implementations of matplotlib, you may need to change this value
-IMAGE_SIZE = 100
+IMAGE_SIZE = 72
+
 
 def generate_a_drawing(figsize, U, V, noise=0.0):
-    fig = plt.figure(figsize=(figsize,figsize))
+    fig = plt.figure(figsize=(figsize, figsize))
     ax = plt.subplot(111)
     plt.axis('Off')
-    ax.set_xlim(0,figsize)
-    ax.set_ylim(0,figsize)
+    ax.set_xlim(0, figsize)
+    ax.set_ylim(0, figsize)
     ax.fill(U, V, "k")
     fig.canvas.draw()
-    imdata = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)[::3].astype(np.float32)
+    imdata = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)[
+        ::3].astype(np.float32)
     imdata = imdata + noise * np.random.random(imdata.size)
     plt.close(fig)
     return imdata
+
 
 def generate_a_rectangle(noise=0.0, free_location=False):
     figsize = 1.0
@@ -58,6 +66,7 @@ def generate_a_disk(noise=0.0, free_location=False):
         i = i + 1
     return generate_a_drawing(figsize, U, V, noise)
 
+
 def generate_a_triangle(noise=0.0, free_location=False):
     figsize = 1.0
     if free_location:
@@ -73,19 +82,19 @@ def generate_a_triangle(noise=0.0, free_location=False):
 
 
 im = generate_a_rectangle(10, True)
-plt.imshow(im.reshape(IMAGE_SIZE,IMAGE_SIZE), cmap='gray')
+plt.imshow(im.reshape(IMAGE_SIZE, IMAGE_SIZE), cmap='gray')
 
 im = generate_a_disk(10)
-plt.imshow(im.reshape(IMAGE_SIZE,IMAGE_SIZE), cmap='gray')
+plt.imshow(im.reshape(IMAGE_SIZE, IMAGE_SIZE), cmap='gray')
 
 [im, v] = generate_a_triangle(20, False)
-plt.imshow(im.reshape(IMAGE_SIZE,IMAGE_SIZE), cmap='gray')
+plt.imshow(im.reshape(IMAGE_SIZE, IMAGE_SIZE), cmap='gray')
 
 
 def generate_dataset_classification(nb_samples, noise=0.0, free_location=False):
     # Getting im_size:
     im_size = generate_a_rectangle().shape[0]
-    X = np.zeros([nb_samples,im_size])
+    X = np.zeros([nb_samples, im_size])
     Y = np.zeros(nb_samples)
     print('Creating data:')
     for i in range(nb_samples):
@@ -102,16 +111,18 @@ def generate_dataset_classification(nb_samples, noise=0.0, free_location=False):
     X = (X + noise) / (255 + 2 * noise)
     return [X, Y]
 
+
 def generate_test_set_classification():
     np.random.seed(42)
     [X_test, Y_test] = generate_dataset_classification(300, 20, True)
-    Y_test = np.utils.to_categorical(Y_test, 3)
+    Y_test = keras.utils.np_utils.to_categorical(Y_test, 3)
     return [X_test, Y_test]
+
 
 def generate_dataset_regression(nb_samples, noise=0.0):
     # Getting im_size:
     im_size = generate_a_triangle()[0].shape[0]
-    X = np.zeros([nb_samples,im_size])
+    X = np.zeros([nb_samples, im_size])
     Y = np.zeros([nb_samples, 6])
     print('Creating data:')
     for i in range(nb_samples):
@@ -121,52 +132,80 @@ def generate_dataset_regression(nb_samples, noise=0.0):
     X = (X + noise) / (255 + 2 * noise)
     return [X, Y]
 
-import matplotlib.patches as patches
 
 def visualize_prediction(x, y):
     fig, ax = plt.subplots(figsize=(5, 5))
-    I = x.reshape((IMAGE_SIZE,IMAGE_SIZE))
-    ax.imshow(I, extent=[-0.15,1.15,-0.15,1.15],cmap='gray')
-    ax.set_xlim([0,1])
-    ax.set_ylim([0,1])
+    I = x.reshape((IMAGE_SIZE, IMAGE_SIZE))
+    ax.imshow(I, extent=[-0.15, 1.15, -0.15, 1.15], cmap='gray')
+    ax.set_xlim([0, 1])
+    ax.set_ylim([0, 1])
 
-    xy = y.reshape(3,2)
-    tri = patches.Polygon(xy, closed=True, fill = False, edgecolor = 'r', linewidth = 5, alpha = 0.5)
+    xy = y.reshape(3, 2)
+    tri = patches.Polygon(xy, closed=True, fill=False,
+                          edgecolor='r', linewidth=5, alpha=0.5)
     ax.add_patch(tri)
 
     plt.show()
+
 
 def generate_test_set_regression():
     np.random.seed(42)
     [X_test, Y_test] = generate_dataset_regression(300, 20)
     return [X_test, Y_test]
 
-import keras
-from keras import utils as np_utils
-from keras.models import Sequential
-from keras.layers import Dense, Flatten
 
 [X_train, y_train] = generate_dataset_classification(300, 20)
-
+[X_test, y_test] = generate_test_set_classification()
 X_train = X_train.astype('float32')
 y_train = y_train.astype('float32')
+X_test = X_test.astype('float32')
+y_test = y_test.astype('float32')
+
 print(X_train.shape)
 print(y_train.shape)
 X_train = X_train.reshape(X_train.shape[1], X_train.shape[0]).T
 y_train = keras.utils.np_utils.to_categorical(y_train)
+X_test = X_test.reshape(X_test.shape[1], X_test.shape[0]).T
+y_test = keras.utils.np_utils.to_categorical(y_test)
 print(X_train.shape)
 print(y_train.shape)
 
 
-epochs = 20
+epochs = 5
 batch_size = 1
+# Simple neuronal network
 model = Sequential()
-model.add(Flatten(input_shape=(IMAGE_SIZE * IMAGE_SIZE,)))
-model.add(Dense(IMAGE_SIZE * IMAGE_SIZE,input_dim=X_train.shape[1], activation='softmax', kernel_initializer='normal',))
-model.add(Dense(y_train.shape[1], activation='sigmoid', kernel_initializer='normal'))
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-#model.summary()
-model_list = model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, verbose=0)
-print(model_list.history.keys())
-plt.plot(range(epochs+1), model_list.history['val_accuracy'])
-plt.plot(range(epochs+1), model_list.history['accuracy'])
+num_pixels = IMAGE_SIZE * IMAGE_SIZE
+model.add(Flatten(input_shape=(num_pixels,)))
+model.add(Dense(num_pixels, activation='softmax', kernel_initializer='normal',))
+model.add(
+    Dense(y_train.shape[1], activation='sigmoid', kernel_initializer='normal'))
+model.compile(loss='categorical_crossentropy',
+              optimizer='adam', metrics=['accuracy'])
+model.summary()
+#model_list = model.fit(X_train, y_train,validation_data=(X_test, y_test), epochs=epochs,
+#                       batch_size=batch_size, verbose=0)
+#print(model_list.history.keys())
+#plt.plot(range(epochs+1), model_list.history['val_accuracy'])
+#plt.plot(range(epochs+1), model_list.history['accuracy'])
+
+# Model CNN
+CNNmodel = Sequential()
+CNNmodel.add(Conv2D(32,
+                 kernel_size=(3, 3),
+                 activation='softmax',
+                 input_shape=(num_pixels, 1)))
+CNNmodel.add(Conv2D(64,
+                 kernel_size=(3, 3),
+                 activation='softmax'))
+CNNmodel.add(MaxPooling2D(pool_size=(2, 2)))
+CNNmodel.add(Flatten())
+CNNmodel.add(Dense(num_pixels, activation='softmax'))
+CNNmodel.add(Dense(y_train.shape[1], activation='softmax'))
+CNNmodel.compile(loss='categorical_crossentropy',
+              optimizer='adam', metrics=['accuracy'])
+CNNmodel_list = CNNmodel.fit(X_train, y_train, validation_data=(X_test, y_test) ,  epochs=epochs,
+                      batch_size=batch_size, verbose=0)
+print(CNNmodel_list.history.keys())
+plt.plot(range(epochs+1), CNNmodel_list.history['val_accuracy'])
+plt.plot(range(epochs+1), CNNmodel_list.history['accuracy'])
