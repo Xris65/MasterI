@@ -1,0 +1,49 @@
+node Minimal
+edon
+
+node FIFO_V1
+    state nbMessages : [0,2]; init nbMessages = 0;
+    event put, get;
+    trans
+        nbMessages < 2 |- put -> nbMessages := nbMessages + 1;
+        nbMessages > 0 |- get -> nbMessages := nbMessages - 1;
+edon
+
+node FIFO_V2
+    state nbMessages : [0,2]; init nbMessages = 0;
+    event put, get;
+    trans
+        true |- put -> nbMessages := nbMessages + 1;
+        true |- get -> nbMessages := nbMessages - 1;
+edon
+
+node Switch
+    state on : bool : public;
+    init on := true;
+    flow f1,f2 : [0,1];
+    event push;
+    trans true |- push -> on := ~on;
+    assert on => (f1 = f2);
+edon 
+
+node Generator
+    flow plus,minus : [0,1];
+    state on : bool;
+    init on := true;
+    event repair,failure;
+    trans on |- failure -> on := false;
+          ~on |- repair -> on := true;
+    assert plus = 1;
+        on = (minus = 0);
+edon
+
+node LampLight
+    flow f1, f2 : [0,1];
+    state on, ok : bool;
+    init ok := true;
+    event reaction;
+    trans
+        ok &(f1 = 1 & f2 = 1) |- reaction -> ok := false,
+                                            on := false;
+        ok & (on = (f1 = f2)) |- reaction -> on := ~on;
+edon
