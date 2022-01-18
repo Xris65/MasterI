@@ -127,10 +127,11 @@ void tsp_seq(int etape, int lg, chemin_t chemin, int mask)
 }
 
 void tsp_ompfor(int etape, int lg, chemin_t chemin, int mask)
-{
+{ // A regler
 
   int ici;
   if (etape == nbVilles){
+    #pragma omp critical // ??
     verifier_minimum(lg, chemin);
   }
   else if(etape > grain)
