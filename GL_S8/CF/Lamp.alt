@@ -28,7 +28,7 @@ edon
 
 node Generator
     flow plus,minus : [0,1];
-    state on : bool;
+    state on : bool : public;
     init on := true;
     event repair,failure;
     trans on |- failure -> on := false;
@@ -47,3 +47,29 @@ node LampLight
                                             on := false;
         ok & (on = (f1 = f2)) |- reaction -> on := ~on;
 edon
+
+node CircuitV1
+  sub   G : Generator;
+        S : Switch;
+        L : LampLight
+  assert S.f1 = G.plus;
+         L.f1 = S.f2;
+         L.f2 = G.minus;
+edon
+
+node CircuitV2
+  sub   G : Generator;
+        S : Switch;
+        L : LampLight
+  state  safe : bool;   init safe := false;
+  event  begin, repair, end;
+  trans  ~safe & ~G.on |- begin -> safe := true;
+        safe |- repair ->;
+        safe & G.on |- end -> safe := false;
+  sync   <repair, G.repair>;
+  assert ~safe => (S.f1 = G.plus);
+        safe => (S.f1 = 0);
+        L.f1 = S.f2;
+        L.f2 = G.minus;
+edon
+
