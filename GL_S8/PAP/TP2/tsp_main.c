@@ -91,14 +91,16 @@ inline int present(int ville, int mask)
 
 void verifier_minimum(int lg, chemin_t chemin)
 {
-  if (lg + distance[0][chemin[nbVilles - 1]] < minimum)
-  {
+  if (lg + distance[0][chemin[nbVilles - 1]] < minimum){
     #pragma omp critical
-    minimum = lg + distance[0][chemin[nbVilles - 1]];
-    printf("%3d :", minimum);
-    for (int i = 0; i < nbVilles; i++)
-      printf("%2d ", chemin[i]);
-    printf("\n");
+    if (lg + distance[0][chemin[nbVilles - 1]] < minimum)
+    {
+      minimum = lg + distance[0][chemin[nbVilles - 1]];
+      printf("%3d :", minimum);
+      for (int i = 0; i < nbVilles; i++)
+        printf("%2d ", chemin[i]);
+      printf("\n");
+    }
   }
 }
 
@@ -127,15 +129,16 @@ void tsp_seq(int etape, int lg, chemin_t chemin, int mask)
 }
 
 void tsp_ompfor(int etape, int lg, chemin_t chemin, int mask)
-{ // A regler
+{
 
+  if (lg +  distance[0][chemin[etape-1]]>= minimum) return;
   int ici;
+  if(etape > grain)
+    tsp_seq(etape, lg, chemin, mask);
+  else{
   if (etape == nbVilles){
-    #pragma omp critical // ??
     verifier_minimum(lg, chemin);
   }
-  else if(etape > grain)
-  tsp_seq(etape, lg, chemin, mask)
   else
   {
     ici = chemin[etape - 1];
@@ -151,6 +154,7 @@ void tsp_ompfor(int etape, int lg, chemin_t chemin, int mask)
         tsp_ompfor(etape + 1, lg + dist, monchemin, mask | (1 << i));
       }
     }
+  }
   }
 }
 
