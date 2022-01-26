@@ -81,3 +81,12 @@ node LessonPriority
       <st2,  T.paper,S[2].write>;
       <st_0, T.paper>;
 edon
+
+node Lesson
+ sub  T : Teacher;
+      S : Student[3];
+ sync 
+  <T.speaks,S[0].listen?,S[1].listen?,S[2].listen?>;
+  <T.paper,S[0].write?,S[1].write?,S[2].write?> <=2;
+edon
+

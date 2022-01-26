@@ -1,0 +1,32 @@
+const nbFloors = 5;
+
+node Button
+    state light : bool;
+    init light = false;
+    event press;
+    trans 
+        light = false |- press -> light := true;
+        light = true |- press -> light := false;
+edon
+
+node Door
+    state open : bool;
+    init open = false;
+    event open;
+    trans 
+        open = false |- open -> open := true;
+        open = true |- open -> open := false;
+edon
+
+node Lift
+    
+
+node Floor
+    sub B : Button;
+        D : door;
+edon
+
+node Building
+    sub F : Floor[nbFloors];
+        L : Lift;
+edon

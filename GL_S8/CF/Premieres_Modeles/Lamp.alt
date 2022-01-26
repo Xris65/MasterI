@@ -72,4 +72,3 @@ node CircuitV2
         L.f1 = S.f2;
         L.f2 = G.minus;
 edon
-
