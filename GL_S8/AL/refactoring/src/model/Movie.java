@@ -12,7 +12,7 @@ public class Movie {
         this.pricing = pricing;
     }
     public Pricing getPricing(){
-        return pricing.getClone();
+        return pricing.clone();
     }
     public void setPricing(Pricing pricing) {
         this.pricing = pricing;

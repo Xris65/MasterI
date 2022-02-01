@@ -20,10 +20,10 @@ public class PricingRegular implements Pricing {
     }
 
     @Override
-    public Pricing getClone() {
+    public Pricing clone() {
         Pricing clone = null;
         try {
-            clone = (Pricing) this.clone();
+            clone = (Pricing) super.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
