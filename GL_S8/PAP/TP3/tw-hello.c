@@ -33,9 +33,9 @@ int main()
           #pragma omp taskwait
 
           #pragma omp task firstprivate(i) 
-	  printf("%s (%d)\n",aurevoir[i], omp_get_thread_num());
+	        printf("%s (%d)\n",aurevoir[i], omp_get_thread_num());
         } 
-      }
+    }
   } 
   return 0;
 }

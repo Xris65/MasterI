@@ -23,22 +23,35 @@ public class Customer {
         return name;
     }
 
+    public double getTotalPrice() {
+        double totalAmount = 0;
+        for (Rental rental : rentals) {
+            totalAmount += rental.getCost();
+        }
+        return totalAmount;
+    }
+
+    public int getTotalFrequentRenterPoints() {
+        int frequentRenterPoints = 0;
+        for (Rental rental : rentals) {
+            frequentRenterPoints += rental.getFrequentRenterPoints();
+        }
+        return frequentRenterPoints;
+    }
+
+    public String printRentals(){
+        StringBuilder rentalInfos = new StringBuilder("");
+        for (Rental rental : rentals) {
+            rentalInfos.append("\t").append(rental.getMovie().getTitle()).append("\t").append(rental.getCost()).append(" \n");
+        }
+        return rentalInfos.toString();
+    }
 
     public String statement() {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
         StringBuilder result = new StringBuilder("Rental Record for " + getName() + "\n");
-        for (Rental rental : rentals) {
-            double thisAmount = 0;
-            thisAmount += rental.getCost();
-            frequentRenterPoints++;
-            if (rental.getMovie().getPriceCode() == Movie.NEW_RELEASE && rental.getDaysRented() > 1)
-                frequentRenterPoints++;
-            result.append("\t").append(rental.getMovie().getTitle()).append("\t").append(thisAmount).append(" \n");
-            totalAmount += thisAmount;
-        }
-        result.append("Amount owned is ").append(totalAmount).append("\n");
-        result.append("You earned ").append(frequentRenterPoints).append(" frequent renter points");
+        result.append(printRentals());
+        result.append("Amount owned is ").append(getTotalPrice()).append("\n");
+        result.append("You earned ").append(getTotalFrequentRenterPoints()).append(" frequent renter points");
         return result.toString();
 
     }

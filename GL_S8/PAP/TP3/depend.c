@@ -26,7 +26,7 @@ int main (int argc, char **argv)
 #pragma omp single
   for (i=0; i < T; i++ )
     for (j=0; j < T; j++ )
-#pragma omp task firstprivate(i,j)
+#pragma omp task firstprivate(i,j) depend(out:A[i][j]) depend(in:A[i-1][j],A[i][j-1])
       tache(i,j);
 
   // affichage du tableau 

@@ -1,26 +1,21 @@
 package model;
 
+import model.Pricing.Pricing;
+
 import java.util.Objects;
 
 public class Movie {
-    public static final int CHILDREN = 2;
-    public static final int REGULAR = 0;
-    public static final int NEW_RELEASE = 1;
-
+    private Pricing pricing;
     private String title;
-    private int priceCode;
-
-    public Movie(String title, int priceCode) {
+    public Movie(String title, Pricing pricing) {
         this.title = title;
-        this.priceCode = priceCode;
+        this.pricing = pricing;
     }
-
-    public int getPriceCode() {
-        return priceCode;
+    public Pricing getPricing(){
+        return pricing.getClone();
     }
-
-    public void setPriceCode(int priceCode) {
-        this.priceCode = priceCode;
+    public void setPricing(Pricing pricing) {
+        this.pricing = pricing;
     }
 
     public String getTitle() {
@@ -28,16 +23,17 @@ public class Movie {
     }
 
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return priceCode == movie.priceCode && Objects.equals(title, movie.title);
+        return pricing.equals(movie.pricing) && Objects.equals(title, movie.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, priceCode);
+        return Objects.hash(title, pricing);
     }
 }

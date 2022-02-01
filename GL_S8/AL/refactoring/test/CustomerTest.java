@@ -1,4 +1,7 @@
 import model.Customer;
+import model.Pricing.PricingChildren;
+import model.Pricing.PricingNewRelease;
+import model.Pricing.PricingRegular;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,9 +26,12 @@ public class CustomerTest {
     @Test
     public void testAddRental() {
         Vector<model.Rental> rentals = new Vector<model.Rental>();
-        rentals.add(new model.Rental(new model.Movie("Movie1", 10), 2));
-        customer.addRental(new model.Rental(new model.Movie("Movie1", 10), 2));
-        assertEquals(rentals, customer.getRentals());
+        rentals.add(new model.Rental(new model.Movie("Movie1", new PricingNewRelease()), 2));
+        customer.addRental(new model.Rental(new model.Movie("Movie1", new PricingNewRelease()), 2));
+        assertEquals(rentals.size(), customer.getRentals().size());
+        for(int i = 0; i < rentals.size(); i++) {
+            assertEquals(rentals.get(i), customer.getRentals().get(i));
+        }
     }
 
     @Test
@@ -35,10 +41,19 @@ public class CustomerTest {
 
     @Test
     public void testStatement() {
-        assertEquals("Rental Record for Client1\n" + "Amount owned is 0.0\n" + "You earned 0 frequent renter points", customer.statement());
-        customer.addRental(new model.Rental(new model.Movie("Rogue One", 1), 5));
-        customer.addRental(new model.Rental(new model.Movie("Reine des neiges", 2), 7));
-        customer.addRental(new model.Rental(new model.Movie("Star Wars III", 0), 4));
-        assertEquals("Rental Record for Client1\n" + "	Rogue One	15.0 \n" + "	Reine des neiges	7.5 \n" + "	Star Wars III	5.0 \n" + "Amount owned is 27.5\n" + "You earned 4 frequent renter points", customer.statement());
+        assertEquals("""
+                Rental Record for Client1
+                Amount owned is 0.0
+                You earned 0 frequent renter points""", customer.statement());
+        customer.addRental(new model.Rental(new model.Movie("Rogue One", new PricingNewRelease()), 5));
+        customer.addRental(new model.Rental(new model.Movie("Reine des neiges", new PricingChildren()), 7));
+        customer.addRental(new model.Rental(new model.Movie("Star Wars III", new PricingRegular()), 4));
+        assertEquals("""
+                Rental Record for Client1
+                	Rogue One	15.0\s
+                	Reine des neiges	7.5\s
+                	Star Wars III	5.0\s
+                Amount owned is 27.5
+                You earned 4 frequent renter points""", customer.statement());
     }
 }

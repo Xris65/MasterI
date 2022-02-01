@@ -1,19 +1,17 @@
 package model;
 
+import model.Pricing.Pricing;
+
 import java.util.Objects;
 
 public class Rental {
-    public static final double PrixForfaitRegular = 2;
-    public static final double PrixForfaitNewrelease = 3;
-    public static final double PrixForfaitChildren = 1.5;
-    public static final int NombreJoursForfaitRegular = 2;
-    public static final int NombreJoursForfaitChildren = 3;
-
     private Movie movie;
     private int daysRented;
+    private Pricing pricing;
 
     public Rental(Movie movie, int daysRented) {
         this.movie = movie;
+        this.pricing = movie.getPricing();
         this.daysRented = daysRented;
     }
 
@@ -25,33 +23,31 @@ public class Rental {
         return movie;
     }
 
-    public double getCost() {
-        double rentalCost = 0;
-        switch (movie.getPriceCode()) {
-            case Movie.REGULAR -> {
-                rentalCost += PrixForfaitRegular;
-                if (daysRented > NombreJoursForfaitRegular) {
-                    rentalCost += (daysRented - NombreJoursForfaitRegular) * PrixForfaitChildren;
-                }
-            }
-            case Movie.NEW_RELEASE -> rentalCost += daysRented * PrixForfaitNewrelease;
-            case Movie.CHILDREN -> {
-                rentalCost += PrixForfaitChildren;
-                if (daysRented > NombreJoursForfaitChildren)
-                    rentalCost += (daysRented - NombreJoursForfaitChildren) * PrixForfaitChildren;
-            }
-        }
-        return rentalCost;
+
+    public double getPrice(double price, double fees, int daysRented) {
+        return (price + fees) * daysRented;
+    }
+    public double getCost(){
+        return pricing.getPrice(daysRented);
+    }
+
+    public int getFrequentRenterPoints() {
+        return pricing.getFrequentRenterPoints(daysRented);
+    }
+
+    public void setPricing(Pricing pricing) {
+        this.pricing = pricing;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Rental rental = (Rental) o;
-        return daysRented == rental.daysRented && Objects.equals(movie, rental.movie);
+        return daysRented == rental.daysRented && movie.equals(rental.movie);
     }
-
 
     @Override
     public int hashCode() {
