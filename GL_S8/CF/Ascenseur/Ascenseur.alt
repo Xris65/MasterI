@@ -1,29 +1,56 @@
-const nbFloors = 5;
+const nbFloors = 4;
 
 node Button
     state light : bool;
     init light = false;
-    event press;
+    event press, off;
     trans 
-        light = false |- press -> light := true;
-        light = true |- press -> light := false;
+        true |- off -> light := false;
+        true |- press -> light := true;
 edon
 
 node Door
-    state open : bool;
-    init open = false;
-    event open;
+    state opened : bool : public ;
+    init opened = false;
+    event open, close;
     trans 
-        open = false |- open -> open := true;
-        open = true |- open -> open := false;
+        ~ opened  |- open -> opened := true;
+        opened |- close -> opened := false;
 edon
 
 node Lift
+    init currentFloor = 0;
+    sub B : Button[nbFloors];
+        D : Door;
+        level : [0, nbFloors - 1];
+    event close[nbFloors], open;
+          down, up;
+    trans 
+        D.opened |- close[0] -> ;
+        D.opened |- close[1] -> ;
+        D.opened |- close[2] -> ;
+        D.opened |- close[3] -> ;
+        ~D.opened |- open -> ;
+        |- down |- level := level - 1;
+        |- up |- level := level + 1;
+    sync <close, D.close, B[0].off>;
+        <close, D.close, B[1].off>;
+        <close, D.close, B[2].off>;
+        <close, D.close, B[3].off>;
+        <open, D.open>;
+edon
     
 
 node Floor
     sub B : Button;
-        D : door;
+        D : Door;
+    event 
+        close, open;
+    trans 
+        D.opened |- close -> ;
+        ~D.opened |- open -> ;
+    sync <close, D.close, B.off>;
+        <open, D.open>;
 edon
 
 node Building
