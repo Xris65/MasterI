@@ -1,0 +1,9 @@
+node Vanne
+     _state : [0,2];
+    init _state = 0;
+    event inc, dec;
+    trans 
+        _state = 0 or _state = 1 |- inc -> _state := _state + 1;
+        _state = 1 or _state = 2 |- dec -> _state := _state - 1;
+edon 
+        
