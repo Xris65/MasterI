@@ -1,0 +1,31 @@
+digraph "ValveVirtual/Q" {
+  label="ValveVirtual/Q (6 classes)";
+	node[shape="box"];
+
+	C0x55ef91356590[label="rateReal = 0, rate = 0",URL="#", tooltip="any_s"];
+	C0x55ef91356560[label="rateReal = 0, rate = 1\nrateReal = 2, rate = 1",URL="#", tooltip="any_s"];
+	C0x55ef91356500[label="rateReal in [0, 1], rate = 2",URL="#", tooltip="any_s"];
+	C0x55ef913565f0[label="rateReal in [1, 2], rate = 0",URL="#", tooltip="any_s"];
+	C0x55ef913565c0[label="rateReal = 1, rate = 1",URL="#", tooltip="any_s"];
+	C0x55ef91356530[label="rateReal = 2, rate = 2",URL="#", tooltip="any_s"];
+	C0x55ef91356590 -> C0x55ef91356590 [label=""];
+	C0x55ef91356590 -> C0x55ef91356560 [label="inc"];
+	C0x55ef91356590 -> C0x55ef913565f0 [label=""];
+	C0x55ef913565f0 -> C0x55ef91356590 [label=""];
+	C0x55ef91356590 -> C0x55ef913565c0 [label="inc"];
+	C0x55ef913565c0 -> C0x55ef91356590 [label="dec"];
+	C0x55ef91356560 -> C0x55ef91356560 [label=""];
+	C0x55ef91356560 -> C0x55ef913565c0 [label=""];
+	C0x55ef913565c0 -> C0x55ef91356560 [label=""];
+	C0x55ef91356530 -> C0x55ef91356560 [label="dec"];
+	C0x55ef91356500 -> C0x55ef91356500 [label=""];
+	C0x55ef913565c0 -> C0x55ef91356500 [label="inc"];
+	C0x55ef91356500 -> C0x55ef91356530 [label=""];
+	C0x55ef91356530 -> C0x55ef91356500 [label=""];
+	C0x55ef913565f0 -> C0x55ef913565f0 [label=""];
+	C0x55ef913565c0 -> C0x55ef913565f0 [label="dec"];
+	C0x55ef913565c0 -> C0x55ef913565c0 [label=""];
+	C0x55ef913565c0 -> C0x55ef91356530 [label="inc"];
+	C0x55ef91356530 -> C0x55ef913565c0 [label="dec"];
+	C0x55ef91356530 -> C0x55ef91356530 [label=""];
+}

@@ -1,0 +1,9 @@
+digraph "Valve/Q" {
+  label="Valve/Q (1 classes)";
+	node[shape="box"];
+
+	C0x55ef913734b0[label="rate in [0, 2], stucked in [0, 1]",URL="#", tooltip="any_s"];
+	C0x55ef913734b0 -> C0x55ef913734b0 [label=""];
+	C0x55ef913734b0 -> C0x55ef913734b0 [label="inc"];
+	C0x55ef913734b0 -> C0x55ef913734b0 [label="dec"];
+}
