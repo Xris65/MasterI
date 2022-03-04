@@ -156,56 +156,64 @@ def generate_test_set_regression():
 
 [X_train, y_train] = generate_dataset_classification(300, 20)
 [X_test, y_test] = generate_test_set_classification()
+y_train = keras.utils.np_utils.to_categorical(y_train)
+
 X_train = X_train.astype('float32')
 y_train = y_train.astype('float32')
 X_test = X_test.astype('float32')
 y_test = y_test.astype('float32')
 
-print(X_train.shape)
-print(y_train.shape)
-X_train = X_train.reshape(X_train.shape[1], X_train.shape[0]).T
-y_train = keras.utils.np_utils.to_categorical(y_train)
-X_test = X_test.reshape(X_test.shape[1], X_test.shape[0]).T
-y_test = keras.utils.np_utils.to_categorical(y_test)
-print(X_train.shape)
-print(y_train.shape)
 
 
-epochs = 5
-batch_size = 1
+epochs = 20
+batch_size = 100
 # Simple neuronal network
 model = Sequential()
 num_pixels = IMAGE_SIZE * IMAGE_SIZE
 model.add(Flatten(input_shape=(num_pixels,)))
 model.add(Dense(num_pixels, activation='softmax', kernel_initializer='normal',))
+model.add(Dense(num_pixels, activation='relu', kernel_initializer='normal',))
+model.add(Dense(num_pixels, activation='sigmoid', kernel_initializer='normal',))
 model.add(
     Dense(y_train.shape[1], activation='sigmoid', kernel_initializer='normal'))
 model.compile(loss='categorical_crossentropy',
               optimizer='adam', metrics=['accuracy'])
 model.summary()
-#model_list = model.fit(X_train, y_train,validation_data=(X_test, y_test), epochs=epochs,
-#                       batch_size=batch_size, verbose=0)
-#print(model_list.history.keys())
-#plt.plot(range(epochs+1), model_list.history['val_accuracy'])
-#plt.plot(range(epochs+1), model_list.history['accuracy'])
+model_list = model.fit(X_train, y_train,validation_data=(X_test, y_test), epochs=epochs,
+                       batch_size=batch_size, verbose=0)
+print(model_list.history.keys())
+plt.plot(range(epochs), model_list.history['val_accuracy'])
+plt.plot(range(epochs), model_list.history['accuracy'])
+
+score = model.evaluate(X_test,y_test)
+print("Simple neural network accuracy : %.2f%%" %  (score[1]*100))
 
 # Model CNN
+X_train = X_train.reshape(X_train.shape[0], IMAGE_SIZE, IMAGE_SIZE, 1)
+X_test = X_test.reshape(X_test.shape[0], IMAGE_SIZE, IMAGE_SIZE, 1)
+print(X_train.shape)
 CNNmodel = Sequential()
 CNNmodel.add(Conv2D(32,
                  kernel_size=(3, 3),
                  activation='softmax',
-                 input_shape=(num_pixels, 1)))
+                 input_shape=(IMAGE_SIZE, IMAGE_SIZE, 1)))
 CNNmodel.add(Conv2D(64,
                  kernel_size=(3, 3),
                  activation='softmax'))
 CNNmodel.add(MaxPooling2D(pool_size=(2, 2)))
 CNNmodel.add(Flatten())
 CNNmodel.add(Dense(num_pixels, activation='softmax'))
+CNNmodel.add(Dense(num_pixels, activation='relu'))
+CNNmodel.add(Dense(num_pixels, activation='sigmoid'))
 CNNmodel.add(Dense(y_train.shape[1], activation='softmax'))
+CNNmodel.add(Dropout(0.5))
 CNNmodel.compile(loss='categorical_crossentropy',
               optimizer='adam', metrics=['accuracy'])
 CNNmodel_list = CNNmodel.fit(X_train, y_train, validation_data=(X_test, y_test) ,  epochs=epochs,
                       batch_size=batch_size, verbose=0)
 print(CNNmodel_list.history.keys())
-plt.plot(range(epochs+1), CNNmodel_list.history['val_accuracy'])
-plt.plot(range(epochs+1), CNNmodel_list.history['accuracy'])
+plt.plot(range(epochs), CNNmodel_list.history['val_accuracy'])
+plt.plot(range(epochs), CNNmodel_list.history['accuracy']) 
+score = CNNmodel.evaluate(X_test,y_test)
+print("CNN neural network accuracy : %.2f%%" %  (score[1]*100))
+
