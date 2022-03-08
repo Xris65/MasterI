@@ -1,0 +1,41 @@
+digraph "Valve (mode automaton)" {
+  label="Valve";
+	node[shape="box"];
+
+N0x55ef9137b5d0[label="((rate = 0)) and ((stucked = 0))"]; 
+N0x55ef9139fc20[label="((rate = 1)) and ((stucked = 0))"]; 
+N0x55ef91397a10[label="((rate = 2)) and ((stucked = 1))"]; 
+N0x55ef91398020[label="((rate = 1)) and ((stucked = 1))"]; 
+N0x55ef9135aba0[label="((rate = 0)) and ((stucked = 1))"]; 
+N0x55ef91383720[label="((rate = 2)) and ((stucked = 0))"]; 
+N0x55ef9137b5d0[label="((rate = 0)) and ((stucked = 0))"]; 
+N0x55ef9137b5d0 -> N0x55ef9137b5d0 [label=""];
+N0x55ef9137b5d0 -> N0x55ef9139fc20 [label="inc"];
+N0x55ef9137b5d0 -> N0x55ef9135aba0 [label="inc"];
+N0x55ef9137b5d0 -> N0x55ef9137b5d0 [label="dec"];
+N0x55ef9137b5d0 -> N0x55ef9135aba0 [label="dec"];
+N0x55ef9139fc20[label="((rate = 1)) and ((stucked = 0))"]; 
+N0x55ef9139fc20 -> N0x55ef9139fc20 [label=""];
+N0x55ef9139fc20 -> N0x55ef91398020 [label="inc"];
+N0x55ef9139fc20 -> N0x55ef91383720 [label="inc"];
+N0x55ef9139fc20 -> N0x55ef9137b5d0 [label="dec"];
+N0x55ef9139fc20 -> N0x55ef91398020 [label="dec"];
+N0x55ef91397a10[label="((rate = 2)) and ((stucked = 1))"]; 
+N0x55ef91397a10 -> N0x55ef91397a10 [label=""];
+N0x55ef91397a10 -> N0x55ef91397a10 [label="inc"];
+N0x55ef91397a10 -> N0x55ef91397a10 [label="dec"];
+N0x55ef91398020[label="((rate = 1)) and ((stucked = 1))"]; 
+N0x55ef91398020 -> N0x55ef91398020 [label=""];
+N0x55ef91398020 -> N0x55ef91398020 [label="inc"];
+N0x55ef91398020 -> N0x55ef91398020 [label="dec"];
+N0x55ef9135aba0[label="((rate = 0)) and ((stucked = 1))"]; 
+N0x55ef9135aba0 -> N0x55ef9135aba0 [label=""];
+N0x55ef9135aba0 -> N0x55ef9135aba0 [label="inc"];
+N0x55ef9135aba0 -> N0x55ef9135aba0 [label="dec"];
+N0x55ef91383720[label="((rate = 2)) and ((stucked = 0))"]; 
+N0x55ef91383720 -> N0x55ef91383720 [label=""];
+N0x55ef91383720 -> N0x55ef91397a10 [label="inc"];
+N0x55ef91383720 -> N0x55ef91383720 [label="inc"];
+N0x55ef91383720 -> N0x55ef9139fc20 [label="dec"];
+N0x55ef91383720 -> N0x55ef91397a10 [label="dec"];
+}

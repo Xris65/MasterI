@@ -1,0 +1,226 @@
+\documentclass[a4paper]{book}
+\usepackage{fullpage}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+
+\usepackage{latexsym}
+\usepackage{fancyhdr}
+\usepackage{makeidx}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{moreverb}
+\usepackage{listings}
+
+\newcommand{\altarica}{{\sc AltaRica}}
+
+\begin{document}
+
+\title{Master 1, Conceptions Formelles\\
+Projet du module \altarica\\
+Synthèse (assistée) d'un contrôleur du niveau d'une cuve}
+
+\date{}
+
+\author{Garion GOUBARD \and Kristo DHIMA}
+
+\maketitle
+
+\chapter{Le sujet}
+\input{tank}
+
+\chapter{Le rapport}
+Le rapport est sur 20 points.
+
+\section{Processus}
+\subsection{Rôle du fichier {\tt GNUmakefile} (1.5 points)}
+Le fichier {\tt GNUmakefile} sert à fabriquer le modèle {\tt tank}. Il fabrique tous les
+différents controleurs, par exemple avec une défaillance, avec deux défaillances ou avec
+une vanne virtuelle par exemple.
+
+\subsection{Rôle de la constante {\tt nbFailures} et de l'assertion associée (0.5 point)}
+La constante nbFailures est utilisé dans le fichier {\tt GNUmakefile} pour définir le
+nombre de contrôleurs à fabriquer, tandis que l'assertion associée sert a borner le nombre
+de vannes pouvant tomber en panne simultanement.
+
+\section{Résultats avec le contrôleur initial {\tt Ctrl}}
+\subsection{Calcul d'un contrôleur}
+\subsubsection{Avec 0 défaillance (0.5 point)}
+\input{LaTeX/System0FCtrl.tex}
+\paragraph{Interprétation des résultats}
+En ce qui concerne le système System0FCtrl, nous pouvons constater que le système est
+stable et efficace. Il n'y a pas de défaillance, et il n'y a pas de blocages. Meme si dans
+l'etat initial on a 86 sitations critiques, le controleur est capable de les regler sans
+probleme. Ce controleur n'a donc pas besoin d'optimisation, car il propose le debit ideal
+en evitant les blocages et situations critiques.
+
+\subsubsection{Avec 1 défaillance (0.5 point)}
+\input{LaTeX/System1FCtrl.tex}
+\paragraph{Interprétation des résultats}
+Le système System1FCtrl commence par ne pas avoir de blocages, mais des situations critiques.
+Apres une iteration, il est capable de diminuer le nombre de situations critiques, mais en
+contrepartie il en cree des blocages. Apres deux et trois iterations, le resultat devient
+un peu mauvais. 3 situations de blocage sont apparues. Il est important aussi de noter que
+tous les cas redoutés sont des blocages, dont environ 2/3 sont des situations critiques.
+Des optimisations sont nécessaires afin d'éviter ce grand nombre de blocages et de situations
+critiques.
+
+
+\subsubsection{Avec 2 défaillances (0.5 point)}
+\input{LaTeX/System2FCtrl.tex}
+\paragraph{Interprétation des résultats}
+Pareillement au système System1FCtrl, le système System2FCtrl commence par ne pas avoir de
+blocages, mais des situations critiques. Après une iteration, il est capable de diminuer le
+nombre de situations critiques, mais en contrepartie il créé des blocages. Apres plusieurs
+iterations, le résultat devient un peu mauvais. Environ 40 situations de blocage sont apparues.
+Il est aussi important de noter que tous les cas redoutés sont des blocages, dont environ
+1/3 sont des situations critiques, comparé a 2/3 du système System1FCtrl.Des optimisations sont
+nécessaires afin d'éviter ce grand nombre de blocages et de situations critiques.
+
+
+
+\subsubsection{Avec 3 défaillances (0.5 point)}
+\input{LaTeX/System3FCtrl.tex}
+\paragraph{Interprétation des résultats}
+Le système System3FCtrl commence par avoir beaucoup de sitations critiques, 617 pour être
+exact. Après une iteration, il est capable de neutraliser les situations critiques, mais en
+contrepartie il créé un petit nombre de blocages, comparé avec les autres systèmes. Après
+plusieurs iterations, le résultat devient plutôt bon. Le nombre de blocages diminue
+de 112 a 27. Des petites optimiations sont nécessaires afin d'éviter ce petit nombre
+de blocages, mais le système est encore assez efficace.
+
+\subsection{Bilan avec le contrôleur initial (1 point)}
+Le controleur initial permet de regler une bonne partie de situations critiques, mais il
+n'est pas capable de les regler toutes. En plus, il cree en contrepartie un bon nombre
+de blocages, suivant le nombre de situations critiques.
+
+\section{Construction d'un contrôleur initial plus performant}
+\subsection{Rôle du composant {\tt ValveVirtual}(2 points)}
+\includegraphics[height=.2\textheight,width=.5\textwidth]{Graphs/Valve-modes.pdf}
+\includegraphics[height=.2\textheight,width=.5\textwidth]{Graphs/ValveVirtual-modes.pdf}
+La semantique du composant {\tt ValveVirtual} est le fait que nous pouvons pas utiliser
+la valve si elle est bloquée. Elle simule donc une valve reele parfaite. Le role de ce
+composant est donc d'eviter les utilisations inutiles de la valve tant qu'on ne peut pas
+changer le rate avec et de simuler les defaillances.
+
+\subsection{Rôle du composant {\tt CtrlVV} (4 points)}
+Le rôle du composant {\tt CtrlVV} est de simuler le contrôleur initial {\tt Ctrl} avec une
+valve virtuelle. L'utilité de ce composant est de permettre de tester le contrôleur initial
+{\tt Ctrl} avec une valve virtuelle, en evitant donc de faire des coups de changement
+qui menent a une erreur, par exemple un blogage ou une situation critique.
+
+
+\section{Résultats avec le contrôleur {\tt CtrlVV}}
+\subsection{Calcul d'un contrôleur}
+\subsubsection{Avec 0 défaillance (0.5 point)}
+\input{LaTeX/System0FCtrlVV.tex}
+\paragraph{Interprétation des résultats}
+Le système System0FCtrlVV est stable et efficace. Il commence par avoir 86
+situations critiques. Au bout de la première itération, il est capable de
+régler toutes ces situations critiques sans générer de blocage ni de défaillance.
+Ce système est tres efficace, donc il n'y a pas besoin de l'optimiser.
+
+\subsubsection{Avec 1 défaillance (0.5 point)}
+\input{LaTeX/System1FCtrlVV.tex}
+\paragraph{Interprétation des résultats}
+Le système System1FCtrlVV commence par avoir beaucoup de situations critiques, 413 pour
+être exact. Au bout de la première itération, il est capable de régler presque toutes ces
+situations critiques en generant qu'un petit nombre de blocages. Au bout de la 3ème itération,
+il est capable de neutraliser le nombre de blocages. Ce système est assez efficace, mais il
+peut avoir une défaillance, donc il y a quand meme un besoin d'optimiser, afin de le rendre
+un peu plus stable et rapide.
+
+
+\subsubsection{Avec 2 défaillances (0.5 point)}
+\input{LaTeX/System2FCtrlVV.tex}
+\paragraph{Interprétation des résultats}
+Le système System2FCtrlVV commence par avoir vraiment beaucoup de situations critiques, 812 pour être
+exact. Au bout de la première itération, il est capable de régler presque toutes ces situations critiques
+en generant quand meme un bon nombre de blocages, 70 pour etre exact. Au bout de la 2ème itération,
+il est capable de neutraliser le nombre de blocages. Ce système est assez efficace, plus efficace
+que le systeme System1FCtrlVV mais il presente un risque plus haut de defaillance. Le besoin
+d'optimiser est donc plus important.
+
+\subsubsection{Avec 3 défaillances (0.5 point)}
+\input{LaTeX/System3FCtrlVV.tex}
+\paragraph{Interprétation des résultats}
+Le système System3FCtrlVV commence par avoir beaucoup de situations critiques, 970 pour être
+exact. Au bout de la première itération, il est capable de régler presque toutes ces situations critiques
+en génerant quand même un bon nombre de blocages, 97 blocages. Au bout de la 2ème itération, il est capable de
+neutraliser le nombre de blocages. Ce système est assez efficace, presque aussi efficace que le systeme
+System2FCtrlVV, mais il presente un risque plus haut de defaillance. Le besoin d'optimiser est donc encore plus
+important.
+
+
+\subsection{Bilan avec le contrôleur CtrlVV (1 point)}
+Le contrôleur CtrlVV permet d'avoir de meilleurs résultats que le contrôleur initial
+grâce a la Valve Virtuelle. Il est beaucoup plus stable et donne des résultats beaucoup plus cohérents.
+Il permet de totalement neutraliser les situations critiques et les blocages. Cela est dû au fait qu'il
+est capable de prevoir une situation de blocage, grace a la valve virtuelle.
+
+\section{Une première optimisation des contrôleurs pour améliorer le débit aval}
+\subsection{Une optimisation basée sur les priorités (1 point)}
+\small{\lstinputlisting{ControleursOpt/Optimisation.alt}}
+% A COMPLETER en expliquant en quoi consiste l'optimisation mise en place.
+
+\subsection{Calcul des contrôleurs optimisés avec {\tt CtrlVV}}
+\paragraph{Avec 0 défaillance}\ \\
+\input{LaTeX/System0FCtrlVV_opt.tex}
+
+\paragraph{Avec 1 défaillance}\ \\
+\input{LaTeX/System1FCtrlVV_opt.tex}
+
+\paragraph{Avec 2 défaillances}\ \\
+\input{LaTeX/System2FCtrlVV_opt.tex}
+
+\paragraph{Avec 3 défaillances}\ \\
+\input{LaTeX/System3FCtrlVV_opt.tex}
+
+\subsection{Bilan avec la première optimisation du contrôleur CtrlVV (1 point)}
+% A COMPLETER
+
+\section{Une deuxième optimisation (3 points)}
+Il est possible d'obtenir de meilleurs résultats que les précédents par au moins deux façons.
+\begin{enumerate}
+\item En utilisant un meilleur ordre pour les priorités entre événements.
+\item En introduisant cet objectif dans le système de calcul de point fixe des actions du contrôleur.
+\end{enumerate}
+
+Vous devez proposer une des deux optimisations conduisant à une solution dans laquelle le débit de la vanne aval est le moins souvent possible décrémenter, voire jamais. Pour cela, vous pouvez~:
+\begin{itemize}
+\item Meilleur ordre sur les événements.
+  \begin{enumerate}
+  \item Modifier le fichier \texttt{ControleursOpt/Optimisation.alt}.
+  \item Faites \texttt{make}.
+  \item Quand vos résultats sont satisfaisants, notez les, puis copiez votre fichier dans \texttt{ControleursOpt/Optimisation-2.alt}.
+  \item Remettez le fichier \texttt{ControleursOpt/Optimisation.alt} d'origine.
+  \item Faites \texttt{make}.
+  \end{enumerate}
+\item Meilleur système d'équations au point fixe.
+  \begin{enumerate}
+  \item Modifier le fichier \texttt{Spec/System.spe}.
+  \item Faites \texttt{make}.
+  \item Quand vos résultats sont satisfaisants, notez les, puis copiez votre fichier dans \texttt{Spec/System-2.spe}.
+  \item Remettez le fichier \texttt{Spec/System.spe} d'origine.
+  \item Faites \texttt{make}.
+  \end{enumerate}
+\end{itemize}
+
+\paragraph{Le nouvel ordre}\ \\
+\small{\lstinputlisting{ControleursOpt/Optimisation-2.alt}}
+% A COMPLETER en décrivant les résultats obtenus
+
+\paragraph{Le nouveau système d'équations}\ \\
+\small{\lstinputlisting[texcl]{Spec/System-2.spe}}
+% A COMPLETER en décrivant les résultats obtenus
+
+\section{Conclusion sur la synthèse de contrôleur (1 point)}
+Le contrôleur initial n'est pas tres efficace, mais il donne quand même des résultats convenables.
+Il peut être amélioré grâce a la valve virtuelle que le CtrlVV implémente. On peut voir que ce deuxième
+contrôleur est bien plus efficace et plus stable. Il permet de neutraliser les situations critiques et de
+régler les blocages. Il y a quand même plusieurs optimisations à faire afin d'éviter des défaillances, ainsi
+qu'améliorer le nombre d'itérations nécessaire pour régler les situations critiques et les blocages.
+
+\end{document}
