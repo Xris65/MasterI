@@ -1,4 +1,4 @@
-(* Frama-C journal generated at 10:33 the 02/03/2022 *)
+(* Frama-C journal generated at 12:06 the 09/03/2022 *)
 
 exception Unreachable
 exception Exception of string
@@ -6,7 +6,13 @@ exception Exception of string
 [@@@ warning "-26"]
 
 (* Run the user commands *)
-let run () = ()
+let run () =
+  Dynamic.Parameter.String.set ""
+    "/autofs/unitytravail/travail/kdhima/Master/GL_S8/Conception_Formelle/tp1/Exo2/max.c,/autofs/unitytravail/travail/kdhima/Master/GL_S8/Conception_Formelle/tp1/Exo1,/autofs/unitytravail/travail/kdhima/Master/GL_S8/Conception_Formelle/tp1/Exo2,/autofs/unitytravail/travail/kdhima/Master/GL_S8/Conception_Formelle/tp1/Exo3,/autofs/unitytravail/travail/kdhima/Master/GL_S8/Conception_Formelle/tp1/Exo4,/autofs/unitytravail/travail/kdhima/Master/GL_S8/Conception_Formelle/tp1/Exo5,/autofs/unitytravail/travail/kdhima/Master/GL_S8/Conception_Formelle/tp1/Exo6";
+  File.init_from_cmdline ();
+  Project.set_keep_current false;
+  Dynamic.Parameter.String.set "-wp-cache" "update";
+  ()
 
 (* Main *)
 let main () =
