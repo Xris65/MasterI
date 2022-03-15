@@ -1,0 +1,16 @@
+xshape/GUIHelper.class
+xshape/JCanvas.class
+xshape/RectangleFx.class
+xshape/AppAwt.class
+xshape/App.class
+xshape/ShapeDecorator.class
+xshape/GUIHelper$1.class
+xshape/BorderShapeFx.class
+xshape/ShapeFactoryFx.class
+xshape/RectangleAwt.class
+xshape/Rectangle.class
+xshape/ShapeFactoryAwt.class
+xshape/Shape.class
+xshape/ShapeFactory.class
+xshape/BorderShapeAwt.class
+xshape/Border.class
