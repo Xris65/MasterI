@@ -1,0 +1,1 @@
+/usr/bin/cc -rdynamic CMakeFiles/atoms.dir/src/main.c.o CMakeFiles/atoms.dir/src/tools.c.o -o ../bin/atoms  -Wl,-rpath,/autofs/unitytravail/travail/kdhima/Master/GL_S8/Programmation_Architectures_Parallelles/Fichiers/build/libsotl libsotl/libsotl.so -lOpenCL -lm -lgomp -lGL -lGLU -lglut -lXmu -lXi 
