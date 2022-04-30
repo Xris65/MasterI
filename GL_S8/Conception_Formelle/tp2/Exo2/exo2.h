@@ -11,6 +11,8 @@ void sort_ptr(int* a, int* b);
     requires \separated(a,b);
     requires *a + *b <= INT_MAX;
     requires *a + *b >= INT_MIN;
+    requires \separated (a,b);
+    ensures *b == \old(*b);
     ensures *a == \old(*a) + *b;
 */
 void sum_in_pointer(int* a, int* b);

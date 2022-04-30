@@ -1,4 +1,4 @@
-(* Frama-C journal generated at 12:16 the 16/03/2022 *)
+(* Frama-C journal generated at 08:56 the 06/04/2022 *)
 
 exception Unreachable
 exception Exception of string
@@ -6,63 +6,7 @@ exception Exception of string
 [@@@ warning "-26"]
 
 (* Run the user commands *)
-let run () =
-  Dynamic.Parameter.Bool.set "-rte" true;
-  Dynamic.Parameter.String.set ""
-    "/autofs/unitytravail/travail/kdhima/Master/GL_S8/Conception_Formelle/tp2/Exo2/exo2.c";
-  File.init_from_cmdline ();
-  !Db.RteGen.compute ();
-  Project.set_keep_current false;
-  Dynamic.Parameter.String.set "-wp-cache" "update";
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  Project.clear
-    ~selection:(State_selection.of_list
-                  [ State.get "Report.print_once";
-                    State.get "Report.print_csv_once";
-                    State.get "Report.classify_once";
-                    State.get "Property_status.Consolidated_status";
-                    State.get "Consolidation graph" ])
-    ();
-  ()
+let run () = ()
 
 (* Main *)
 let main () =
