@@ -505,7 +505,31 @@ bool NextPermutation(int *P, unsigned int n)
         Donnez une formalisation de ces post-conditions :
 
         \begin{solutionorbox}
-            METTEZ VOTRE RÉPONSE ICI.
+            Nous avons séparé les pré-conditions en 3 parties : 
+            \begin{itemize}
+                \item La partie génerale, qui contient les pré-conditions qui se passeront dans tous les cas :
+                \begin{lstlisting}
+ensures isPermutation(\at(P, Post), n);
+assigns P[0..n-1];
+
+                \end{lstlisting}
+                \item La partie des pré-conditions qui ne se passeront que si la fonction reçoit une permutation maximale a l'entrée :
+                
+                \begin{lstlisting}
+behavior MaxPerm:
+    assumes isMaxPerm{Pre}(P,n);
+    ensures \result == false;
+    assigns \nothing;
+                \end{lstlisting}
+
+                \item La partie des pré-conditions qui ne se passeront que si la fonction reçoit une permutation non-maximale a l'entrée :
+                \begin{lstlisting}
+behavior NotMaxPerm:
+    assumes !isMaxPerm{Pre}(P,n);
+    ensures \result == true;
+    ensures isStrictlyBiggerPerm{Pre,Post}(P, P, n);
+                \end{lstlisting}
+            \end{itemize}
         \end{solutionorbox}
 
         Bon, je ne vais pas vous faire l’insulte de vous demander de calculer les $\WLP$ des deux boucles, puisque leur corps n’est pas ultra compliqué.
@@ -513,7 +537,18 @@ bool NextPermutation(int *P, unsigned int n)
         \part Pour la première boucle, déterminez des invariants. Le but est surtout de déterminer ce que fait la boucle. Indication : la boucle s’arrête dès qu’on n’a trouvé un indice $j$ pour lequel $P[j-1] > P[j]$. Que peut-on donc dire sur la fin du tableau si on est en $j$ ? (ceci est une question réthorique pour que vous trouviez l’invariant). Déterminez ces invariants et justifiez (rapidement) que c’en sont : il faut deux invariants. Déterminez une clause assigns et un variant.
 
         \begin{solutionorbox}
-            METTEZ VOTRE RÉPONSE ICI.
+            Les invariants sont :
+            \begin{enumerate}
+                \item $0 \leq j \leq n-1$
+                    Car j est initialize a $n-1$. Elle decremente par 1 a chaque tour de boucle jusqu'a la sortie de boucle, et, dans les pires des cas, nous avons $j == 0$, cas dans lequel nous n'avons pas trouve de j adequat.
+                \item  $\forall$ integer $k ; 0 < k \leq n - 1 ==> P[k - 1] \geq P[k]$
+                    Nous utilisons cet invariant car c'est simplement la deuxiemme condition d'arret de la boucle, ce qui doit donc etre valide dans chaque iteration de la boucle.
+            \end{enumerate}
+            La clause assign,ainsi que le variant choisi sont:
+            \begin{lstlisting}
+loop assigns j;
+loop variant j;
+            \end{lstlisting}
         \end{solutionorbox}
 
 
@@ -521,7 +556,19 @@ bool NextPermutation(int *P, unsigned int n)
         Il y a besoin de deux invariants. Donnez la clause assigns et un variant.
 
         \begin{solutionorbox}
-            METTEZ VOTRE RÉPONSE ICI.
+            Les invariants sont :
+            \begin{enumerate}
+                \item $i < j \leq n$
+                    Car i est initialize a $j-1$, donc $i < j$. $j$ augmente de 1 a chaque tour de boucle jusqu'a la sortie de boucle, et, dans les pires des cas, nous avons $j == n$, cas dans lequel nous n'avons pas trouve de j adequat.
+                \item  $\forall$ integer $k ; i < k < n ==> P[i] < P[k] $
+                    Nous utilisons cet invariant car c'est simplement la deuxiemme condition d'arret de la boucle, ce qui doit donc etre valide dans chaque iteration de la boucle.
+            \end{enumerate}
+            La clause assign,ainsi que le variant choisi sont:
+            \begin{lstlisting}
+loop assigns j;
+loop variant n - j;
+            \end{lstlisting}
+            Le choix du variant $n-j$ est car initialement nous avons $0 < j <= n$, et $j$ incremente a chaque tour de boucle, ce qui fait en sorte que $n-j$ decremente a chaque tour de boucle, car $n$ reste inchange.
         \end{solutionorbox}
 
         \part Terminez les annotations dans le fichier pour démontrer le contrat de cette fonction. En particulier, précisez les requires pertinent, la bonne clause assigns pour le contrat, et la clause terminates qui assure que cette fonction termine.
