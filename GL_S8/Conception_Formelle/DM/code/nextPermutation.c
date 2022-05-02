@@ -5,7 +5,7 @@
 bool NextPermutation(int *P, unsigned int n)
 {
     unsigned int i = n - 1, j;
-
+    
     /* étape 1: cherche i le plus grand tq P[i]<P[i+1] */
     j = n - 1;
 

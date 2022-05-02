@@ -540,11 +540,11 @@ behavior NotMaxPerm:
             Les invariants sont :
             \begin{enumerate}
                 \item $0 \leq j \leq n-1$
-                    Car j est initialize a $n-1$. Elle decremente par 1 a chaque tour de boucle jusqu'a la sortie de boucle, et, dans les pires des cas, nous avons $j == 0$, cas dans lequel nous n'avons pas trouve de j adequat.
-                \item  $\forall$ integer $k ; 0 < k \leq n - 1 ==> P[k - 1] \geq P[k]$
-                    Nous utilisons cet invariant car c'est simplement la deuxiemme condition d'arret de la boucle, ce qui doit donc etre valide dans chaque iteration de la boucle.
+                    Car j est initialisé a $n-1$. Elle est décrementée de 1 à chaque tour de boucle jusqu'à la sortie de boucle, et, dans le pire des cas, nous avons $j == 0$. Dans ce cas là, n'avons pas trouvé de j adéquat.
+                \item  $\forall$ integer $k ; j < k \leq n - 1 ==> P[k - 1] \geq P[k]$
+                    Nous utilisons cet invariant car c'est simplement la deuxième condition d'arrêt de la boucle, ce qui doit donc être valide à chaque itération de la boucle. Nous vérifions ainsi que la partie parcourue par la boucle( dans ce cas $P[j..n-1]$) valide bien cette condition.
             \end{enumerate}
-            La clause assign,ainsi que le variant choisi sont:
+            La clause assign ainsi que le variant choisi sont:
             \begin{lstlisting}
 loop assigns j;
 loop variant j;
@@ -559,16 +559,16 @@ loop variant j;
             Les invariants sont :
             \begin{enumerate}
                 \item $i < j \leq n$
-                    Car i est initialize a $j-1$, donc $i < j$. $j$ augmente de 1 a chaque tour de boucle jusqu'a la sortie de boucle, et, dans les pires des cas, nous avons $j == n$, cas dans lequel nous n'avons pas trouve de j adequat.
-                \item  $\forall$ integer $k ; i < k < n ==> P[i] < P[k] $
-                    Nous utilisons cet invariant car c'est simplement la deuxiemme condition d'arret de la boucle, ce qui doit donc etre valide dans chaque iteration de la boucle.
+                    Car i est initialisé à $j-1$, donc $i < j$. $j$ augmente de 1 à chaque tour de boucle jusqu'à la sortie de boucle, et, dans le pire des cas, nous avons $j == n$. Dans ce cas là, n'avons pas trouvé de j adéquat.
+                \item  $\forall$ integer $k ; i < k < j ==> P[i] < P[k] $
+                    Nous utilisons cet invariant car c'est simplement la deuxième condition d'arrêt de la boucle, ce qui doit donc être valide dans chaque iteration de la boucle. Nous vérifions ainsi que la partie parcourue par la boucle( dans ce cas $P[i..j]$) valide bien cette condition.
             \end{enumerate}
-            La clause assign,ainsi que le variant choisi sont:
+            La clause assign et le variant choisi sont:
             \begin{lstlisting}
 loop assigns j;
 loop variant n - j;
             \end{lstlisting}
-            Le choix du variant $n-j$ est car initialement nous avons $0 < j <= n$, et $j$ incremente a chaque tour de boucle, ce qui fait en sorte que $n-j$ decremente a chaque tour de boucle, car $n$ reste inchange.
+            Le choix du variant $n-j$ est adéquat car initialement nous avons $0 < j <= n$, et $j$ incrémente a chaque tour de boucle, ce qui fait que $n-j$ décremente à chaque tour de boucle, car $n$ reste inchangé.
         \end{solutionorbox}
 
         \part Terminez les annotations dans le fichier pour démontrer le contrat de cette fonction. En particulier, précisez les requires pertinent, la bonne clause assigns pour le contrat, et la clause terminates qui assure que cette fonction termine.

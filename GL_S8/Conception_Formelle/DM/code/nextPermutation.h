@@ -13,11 +13,11 @@
     behavior MaxPerm:
         assumes isMaxPerm{Pre}(P,n);
         ensures \result == false;
-        ensures unchangedTab{Pre,Post}(P, P, 0, n);
+        ensures unchangedTab{Pre, Post}(P, P, 0, n);
     behavior NotMaxPerm:
-        assumes !isMaxPerm{Pre}(P,n);
+        assumes !isMaxPerm{Pre}(P, n);
         ensures \result == true;
-        ensures isStrictlyBiggerPerm{Pre,Post}(P, P, n);
+        ensures isStrictlyBiggerPerm{Pre, Post}(P, P, n);
     
     complete behaviors;
     disjoint behaviors MaxPerm,NotMaxPerm;
