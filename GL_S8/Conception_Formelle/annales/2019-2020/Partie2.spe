@@ -1,0 +1,11 @@
+with SystemV1, SystemV2, SystemV3 do
+notResettable := any_s - coreach(initial,any_t);
+notReq1 := any_s & src(label P.run) & src(label S.run);
+notReq2 := any_s & (src(label P.start) & src(label S.repair)) | (src(label S.start) & src(label P.repair));
+notReq3 := [~P.on & P.ok & ~S.on & S.ok] & src(label S.start);
+notReq4 := [~P.on & P.ok] & src(label S.run) ;
+done
+
+
+with SystemV2 do
+

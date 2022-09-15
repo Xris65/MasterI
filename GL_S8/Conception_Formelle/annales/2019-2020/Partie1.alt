@@ -1,0 +1,64 @@
+node Motor
+    state
+        on, ok : bool : public;
+    init
+        on := False, ok := True;
+    event
+        start, stop, failure, repair, run;
+    trans
+        ~on & ~ok |- repair -> ok := true;
+        ~on & ok |- start -> on := true;
+        on & ok |- stop -> on := false;
+        on & ok |- failure -> ok := false, on := false;
+        on & ok |- run -> ; 
+edon
+
+node SystemV1
+    sub P,S : Motor;
+    event
+        startP, startS;
+    trans
+        ~S.on |- startP -> ; 
+        ~P.on |- startS -> ; 
+    sync
+        <startP, P.start>;
+        <startS, S.start>
+edon
+
+node SystemV2
+    sub P,S : Motor;
+    event
+        startP > {startS, repairS};
+        startS > repairP;
+    trans
+        ~P.on |- startS -> ;
+        ~S.on |- startP -> ;
+        ~P.ok |- repairP -> ;
+        ~S.ok |- repairS -> ;
+    sync
+        <repairP,P.repair>;
+        <repairS,S.repair>;
+        <startS, S.start>;
+        <startP, P.start>
+edon
+
+
+node SystemV3
+    sub P,S : Motor;
+    event
+        startP > {startS, repairS, runS};
+        startS > repairP;
+    trans
+        ~P.on |- startS -> ;
+        true |- startP -> ;
+        true|- repairP -> ;
+        true |- repairS -> ;
+        true |- runS -> ;
+    sync
+        <repairP,P.repair>;
+        <repairS,S.repair>;
+        <startS, S.start>;
+        <runS, S.run>;
+        <startP, P.start, S.stop?>;
+edon
+
